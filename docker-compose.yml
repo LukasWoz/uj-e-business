@@ -1,0 +1,7 @@
+services:
+  ebusiness:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lukas/ebusiness:latest
+    container_name: ebusiness

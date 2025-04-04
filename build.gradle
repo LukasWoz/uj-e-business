@@ -1,6 +1,5 @@
-plugins {
-    id 'java'
-}
+apply plugin: 'java'
+apply plugin: 'application'
 
 repositories {
     mavenCentral()
@@ -9,3 +8,5 @@ repositories {
 dependencies {
     implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
 }
+
+mainClassName = 'HelloWorld'
