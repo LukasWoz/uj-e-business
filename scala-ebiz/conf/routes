@@ -9,8 +9,25 @@ GET     /                           controllers.HomeController.index()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
+# Product endpoints
 GET     /products                   controllers.ProductController.listProducts()
 GET     /products/:id               controllers.ProductController.getProduct(id: Long)
 POST    /products                   controllers.ProductController.addProduct()
 PUT     /products/:id               controllers.ProductController.updateProduct(id: Long)
 DELETE  /products/:id               controllers.ProductController.deleteProduct(id: Long)
+GET     /categories/:categoryId/products                        controllers.ProductController.listProductsByCategory(categoryId: Long)
+GET     /categories/:categoryId/products/:productId             controllers.ProductController.getProductByCategory(categoryId: Long, productId: Long)
+
+# Category endpoints
+GET     /categories                 controllers.CategoryController.listCategories()
+GET     /categories/:id             controllers.CategoryController.getCategory(id: Long)
+POST    /categories                 controllers.CategoryController.addCategory()
+PUT     /categories/:id             controllers.CategoryController.updateCategory(id: Long)
+DELETE  /categories/:id             controllers.CategoryController.deleteCategory(id: Long)
+
+# Cart endpoints
+GET     /carts                      controllers.CartController.listCarts()
+GET     /carts/:id                  controllers.CartController.getCart(id: Long)
+POST    /carts                      controllers.CartController.addCart()
+PUT     /carts/:id                  controllers.CartController.updateCart(id: Long)
+DELETE  /carts/:id                  controllers.CartController.deleteCart(id: Long)
