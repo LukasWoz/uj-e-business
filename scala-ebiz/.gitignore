@@ -7,10 +7,3 @@ target
 /.project
 /.settings
 /RUNNING_PID
-../.metals/
-.bloop/
-.bsp/
-.vscode/
-metals.lock.db
-metals.mv.db
-metals.log

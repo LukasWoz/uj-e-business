@@ -9,4 +9,8 @@ GET     /                           controllers.HomeController.index()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET     /products                   controllers.ProductController.index
+GET     /products                   controllers.ProductController.listProducts()
+GET     /products/:id               controllers.ProductController.getProduct(id: Long)
+POST    /products                   controllers.ProductController.addProduct()
+PUT     /products/:id               controllers.ProductController.updateProduct(id: Long)
+DELETE  /products/:id               controllers.ProductController.deleteProduct(id: Long)
