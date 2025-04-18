@@ -28,6 +28,15 @@ class DiscordBot(private val app: Application) {
     
     private val json = Json { ignoreUnknownKeys = true }
 
+
+    private val categories = listOf("Clothes", "Shoes", "Socks")
+
+    private val productsByCategory = mapOf(
+        "Clothes" to listOf("Jeans", "Jacket", "Dress"),
+        "Shoes" to listOf("Nike", "Puma", "Sandals"),
+        "Socks" to listOf("Black", "White", "Invisible")
+    )
+
     private val token by lazy {
         System.getenv("DISCORD_BOT_TOKEN")
             ?: error("ENV DISCORD_BOT_TOKEN not set")
@@ -85,8 +94,24 @@ class DiscordBot(private val app: Application) {
                         val channelId = obj["channel_id"]!!.jsonPrimitive.content
                         val content = obj["content"]!!.jsonPrimitive.content
 
-                        if (content.startsWith("!echo ")) {
-                            sendMessage(channelId, "Echo: ${content.removePrefix("!echo ")}")
+                        when {
+                            content.startsWith("!echo ") -> {
+                                sendMessage(channelId, "Echo: ${content.removePrefix("!echo ")}")
+                            }
+                            content.equals("!categories", ignoreCase = true) -> {
+                                val response = categories.joinToString(separator = ", ")
+                                sendMessage(channelId, "Categories: $response")
+                            }
+                            content.startsWith("!products", ignoreCase = true) -> {
+                                val category = content.removePrefix("!products ").trim()
+                                val products = productsByCategory[category]
+                                if (products != null) {
+                                    val response = products.joinToString(separator = ", ")
+                                    sendMessage(channelId, "Products in category '$category': $response")
+                                } else {
+                                    sendMessage(channelId, "Category not found: $category")
+                                }
+                            }
                         }
                     }
                 }
