@@ -1,0 +1,13 @@
+[ {
+  "id" : 1,
+  "name" : "Adventure"
+}, {
+  "id" : 2,
+  "name" : "Relaxation"
+}, {
+  "id" : 3,
+  "name" : "Cultural"
+}, {
+  "id" : 4,
+  "name" : "Nature"
+} ]

@@ -3,38 +3,40 @@ package controllers
 import javax.inject._
 import play.api.mvc._
 import play.api.libs.json._
-import models.Cart
-import scala.collection.mutable.ArrayBuffer
+import models.{Cart, Product}
+import repositories.{CartRepository, ProductRepository}
 
 @Singleton
-class CartController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
-
-  private val carts: ArrayBuffer[Cart] = ArrayBuffer(
-    Cart(1, "Cart for user A"),
-    Cart(2, "Cart for user B")
-  )
+class CartController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
 
   def listCarts() = Action {
-    Ok(Json.toJson(carts))
+    val cartViews = CartRepository.findAll().map { cart =>
+      Json.obj(
+        "id" -> cart.id,
+        "items" -> cart.productIds.flatMap(ProductRepository.findById)
+      )
+    }
+    Ok(Json.toJson(cartViews))
   }
 
   def getCart(id: Long) = Action {
-    carts.find(_.id == id) match {
-      case Some(cart) => Ok(Json.toJson(cart))
-      case None => NotFound(Json.obj("error" -> s"Cart with id $id not found"))
+    CartRepository.findById(id) match {
+      case Some(cart) =>
+        val items = cart.productIds.flatMap(ProductRepository.findById)
+        Ok(Json.obj("id" -> cart.id, "items" -> items))
+      case None =>
+        NotFound(Json.obj("error" -> s"Cart with id $id not found"))
     }
   }
 
   def addCart() = Action(parse.json) { request =>
     request.body.validate[Cart].fold(
       _ => BadRequest(Json.obj("error" -> "Invalid cart data")),
-      newCart => {
-        if (carts.exists(_.id == newCart.id)) {
-          Conflict(Json.obj("error" -> s"Cart with id ${newCart.id} already exists"))
-        } else {
-          carts += newCart
-          Created(Json.toJson(newCart))
-        }
+      cart => CartRepository.add(cart) match {
+        case Right(c) =>
+          val items = c.productIds.flatMap(ProductRepository.findById)
+          Created(Json.obj("id" -> c.id, "items" -> items))
+        case Left(error) => Conflict(Json.obj("error" -> error))
       }
     )
   }
@@ -42,24 +44,21 @@ class CartController @Inject()(cc: ControllerComponents) extends AbstractControl
   def updateCart(id: Long) = Action(parse.json) { request =>
     request.body.validate[Cart].fold(
       _ => BadRequest(Json.obj("error" -> "Invalid cart data")),
-      updatedData => {
-        carts.indexWhere(_.id == id) match {
-          case -1 => NotFound(Json.obj("error" -> s"Cart with id $id not found"))
-          case index =>
-            val updatedCart = updatedData.copy(id = id)
-            carts.update(index, updatedCart)
-            Ok(Json.toJson(updatedCart))
-        }
+      updated => CartRepository.update(id, updated) match {
+        case Right(c) =>
+          val items = c.productIds.flatMap(ProductRepository.findById)
+          Ok(Json.obj("id" -> c.id, "items" -> items))
+        case Left(error) => NotFound(Json.obj("error" -> error))
       }
     )
   }
 
   def deleteCart(id: Long) = Action {
-    carts.indexWhere(_.id == id) match {
-      case -1 => NotFound(Json.obj("error" -> s"Cart with id $id not found"))
-      case index =>
-        val removedCart = carts.remove(index)
-        Ok(Json.toJson(removedCart))
+    CartRepository.delete(id) match {
+      case Right(deleted) =>
+        val items = deleted.productIds.flatMap(ProductRepository.findById)
+        Ok(Json.obj("id" -> deleted.id, "items" -> items))
+      case Left(error) => NotFound(Json.obj("error" -> error))
     }
   }
 }

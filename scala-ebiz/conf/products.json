@@ -1,0 +1,51 @@
+[ {
+  "id" : 1,
+  "name" : "Swimming with sharks",
+  "price" : 499.99,
+  "categoryId" : 1
+}, {
+  "id" : 2,
+  "name" : "Mountain Adventure",
+  "price" : 699.99,
+  "categoryId" : 4
+}, {
+  "id" : 3,
+  "name" : "City Explorer",
+  "price" : 299.99,
+  "categoryId" : 3
+}, {
+  "id" : 4,
+  "name" : "Lion treat",
+  "price" : 999.99,
+  "categoryId" : 4
+}, {
+  "id" : 5,
+  "name" : "Cultural Journey",
+  "price" : 399.99,
+  "categoryId" : 3
+}, {
+  "id" : 6,
+  "name" : "Island Retreat",
+  "price" : 599.99,
+  "categoryId" : 2
+}, {
+  "id" : 7,
+  "name" : "Poison Tasting Tour",
+  "price" : 349.99,
+  "categoryId" : 2
+}, {
+  "id" : 8,
+  "name" : "Historical Voyage",
+  "price" : 449.99,
+  "categoryId" : 3
+}, {
+  "id" : 9,
+  "name" : "Drowning Experience",
+  "price" : 899.99,
+  "categoryId" : 1
+}, {
+  "id" : 10,
+  "name" : "Deadly Adventure",
+  "price" : 549.99,
+  "categoryId" : 1
+} ]
