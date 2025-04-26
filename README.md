@@ -36,7 +36,7 @@ Kontrolery mogą bazować na listach zamiast baz danych. CRUD: show all, show by
 Kod: [Link do brancha](https://github.com/LukasWoz/uj-e-business/tree/Scala)
 
 
-**Zadanie 2** Kotlin
+**Zadanie 3** Kotlin
 
 :white_check_mark:  3.0 Należy stworzyć aplikację kliencką w Kotlinie we frameworku Ktor, która pozwala na przesyłanie wiadomości na platformę Discord [Link do commita 1](https://github.com/LukasWoz/uj-e-business/commit/9a8364cd37a4d0a51903a9d9789d125e74f54745)
 
