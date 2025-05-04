@@ -27,7 +27,7 @@ func GetProducts(c echo.Context) error {
     db := c.Get("db").(*gorm.DB)
 
     var products []models.Product
-    if err := db.Find(&products).Error; err != nil {
+    if err := db.Preload("Category").Find(&products).Error; err != nil {
         return c.JSON(http.StatusInternalServerError, err.Error())
     }
 
@@ -39,7 +39,7 @@ func GetProduct(c echo.Context) error {
 	id := c.Param("id")
 
 	var product models.Product
-	if err := db.First(&product, id).Error; err != nil {
+	if err := db.Preload("Category").First(&product, id).Error; err != nil {
 		return c.JSON(http.StatusNotFound, echo.Map{"error": "Product not found"})
 	}
 
