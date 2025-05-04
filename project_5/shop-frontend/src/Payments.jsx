@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useCart } from "./CartContext";
 
 function Payments() {
-  const [amount, setAmount] = useState("");
+  const { totalAmount, cartItems, clearCart } = useCart();
   const [method, setMethod] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const paymentData = {
-      amount: parseFloat(amount),
+      amount: totalAmount,
       method: method
     };
 
@@ -27,14 +28,18 @@ function Payments() {
       })
       .then(message => {
         alert(message);
-        setAmount("");
         setMethod("");
+        clearCart();
       })
       .catch(error => {
         console.error("Error submitting payment:", error);
         alert("Payment error");
       });
   };
+
+  if (cartItems.length === 0) {
+    return <p>Nie możesz złożyć płatności — koszyk jest pusty.</p>;
+  }
 
   return (
     <div>
@@ -48,16 +53,15 @@ function Payments() {
           maxWidth: "400px",
         }}
       >
-        <label>
-          Kwota:
+        <div>
+          <label>Kwota:</label>
           <input
             type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-            style={{ width: "100%", padding: "0.5rem" }}
+            value={totalAmount.toFixed(2)}
+            readOnly
+            style={{ width: "100%", padding: "0.5rem", backgroundColor: "#eee" }}
           />
-        </label>
+        </div>
         <label>
           Metoda płatności:
           <input
