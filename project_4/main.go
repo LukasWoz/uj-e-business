@@ -19,6 +19,9 @@ func main() {
     }
 
 	db.AutoMigrate(&models.Product{})
+	db.AutoMigrate(&models.Cart{})
+	db.AutoMigrate(&models.CartItem{})
+
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
         return func(c echo.Context) error {
@@ -33,6 +36,18 @@ func main() {
 	e.PUT("/products/:id", controllers.UpdateProduct)
 	e.DELETE("/products/:id", controllers.DeleteProduct)
 	
+	e.POST("/carts", controllers.CreateCart)
+	e.GET("/carts", controllers.GetCarts)
+	e.GET("/carts/:id", controllers.GetCart)
+	e.PUT("/carts/:id", controllers.UpdateCart)
+	e.DELETE("/carts/:id", controllers.DeleteCart)
+
+	e.POST("/cart-items", controllers.CreateCartItem)
+	e.GET("/cart-items", controllers.GetCartItems)
+	e.GET("/cart-items/:id", controllers.GetCartItem)
+	e.PUT("/cart-items/:id", controllers.UpdateCartItem)
+	e.DELETE("/cart-items/:id", controllers.DeleteCartItem)
+
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
