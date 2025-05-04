@@ -1,0 +1,7 @@
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+cypress/results/
+
+node_modules/
+.cypress_cache/
