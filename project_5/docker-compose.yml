@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./shop-backend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  frontend:
+    build: ./shop-frontend
+    ports:
+      - "5173:5173"
+    networks:
+      - app-network
+    environment:
+      - VITE_API_URL=http://localhost:8080
+
+networks:
+  app-network:
