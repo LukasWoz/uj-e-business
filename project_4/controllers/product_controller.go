@@ -33,3 +33,51 @@ func GetProducts(c echo.Context) error {
 
     return c.JSON(http.StatusOK, products)
 }
+
+func GetProduct(c echo.Context) error {
+	db := c.Get("db").(*gorm.DB)
+	id := c.Param("id")
+
+	var product models.Product
+	if err := db.First(&product, id).Error; err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{"error": "Product not found"})
+	}
+
+	return c.JSON(http.StatusOK, product)
+}
+
+func UpdateProduct(c echo.Context) error {
+	db := c.Get("db").(*gorm.DB)
+	id := c.Param("id")
+
+	var product models.Product
+	if err := db.First(&product, id).Error; err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{"error": "Product not found"})
+	}
+
+	if err := c.Bind(&product); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	if err := db.Save(&product).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, product)
+}
+
+func DeleteProduct(c echo.Context) error {
+	db := c.Get("db").(*gorm.DB)
+	id := c.Param("id")
+
+	var product models.Product
+	if err := db.First(&product, id).Error; err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{"error": "Product not found"})
+	}
+
+	if err := db.Delete(&product).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.NoContent(http.StatusNoContent)
+}

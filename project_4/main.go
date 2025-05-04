@@ -29,6 +29,9 @@ func main() {
 
 	e.POST("/products", controllers.CreateProduct)
     e.GET("/products", controllers.GetProducts)
+	e.GET("/products/:id", controllers.GetProduct)
+	e.PUT("/products/:id", controllers.UpdateProduct)
+	e.DELETE("/products/:id", controllers.DeleteProduct)
 	
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
