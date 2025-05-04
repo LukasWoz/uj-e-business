@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -24,10 +28,15 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  background-color: #fff;
+  color: #1a202c;
+}
+
+.main-content {
+  padding: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 h1 {

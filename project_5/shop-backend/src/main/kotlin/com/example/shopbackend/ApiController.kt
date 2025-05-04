@@ -12,8 +12,8 @@ class ApiController {
     @GetMapping("/products")
     fun getProducts(): List<Product> {
         return listOf(
-            Product(1, "Desk", 201.99),
-            Product(2, "Carpet", 89.00)
+            Product(1, "Biurko", 201.99),
+            Product(2, "Dywan", 89.00)
         )
     }
 

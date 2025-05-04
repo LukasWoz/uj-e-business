@@ -13,13 +13,19 @@ function Products() {
   return (
     <div>
       <h2>Produkty</h2>
-      <ul>
+      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
         {products.map(product => (
-          <li key={product.id}>
-            {product.name} - {product.price} zł
-          </li>
+          <div key={product.id} style={{
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            padding: "16px",
+            width: "200px"
+          }}>
+            <strong>{product.name}</strong>
+            <p>{product.price} zł</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

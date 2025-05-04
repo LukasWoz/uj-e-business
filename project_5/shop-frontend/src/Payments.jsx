@@ -39,26 +39,47 @@ function Payments() {
   return (
     <div>
       <h2>Płatności</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Kwota: </label>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          maxWidth: "400px",
+        }}
+      >
+        <label>
+          Kwota:
           <input
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             required
+            style={{ width: "100%", padding: "0.5rem" }}
           />
-        </div>
-        <div>
-          <label>Metoda płatności: </label>
+        </label>
+        <label>
+          Metoda płatności:
           <input
             type="text"
             value={method}
             onChange={(e) => setMethod(e.target.value)}
             required
+            style={{ width: "100%", padding: "0.5rem" }}
           />
-        </div>
-        <button type="submit">Zapłać</button>
+        </label>
+        <button
+          type="submit"
+          style={{
+            padding: "0.75rem",
+            backgroundColor: "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+          }}
+        >
+          Zapłać
+        </button>
       </form>
     </div>
   );
